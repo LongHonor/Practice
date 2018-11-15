@@ -1,0 +1,36 @@
+#include<stdio.h>
+
+void addArray(int *x,int *y,int *z,int size);
+int main(){
+	int m[20]={0};
+	int n[20] = {0};
+	int o[20] = {0};
+	int size = 0;
+	int *p = NULL;
+
+	scanf("%d",&size);
+	for(p = m;p<m+size;p++){
+		scanf("%d",p);
+	}
+	for(p= n;p<n+size;p++){
+		scanf("%d",p);
+	}
+
+	addArray(m,n,o,size);
+
+	for(p=o;p<o+size;p++){
+		printf(" %d",*p);
+	}
+
+	printf("\n");
+
+	return 0;
+}
+
+void addArray(int *x,int *y,int *z,int size){
+	int *p = NULL;
+
+	for(p = z;p<z+size;p++){
+		*p = *(x+(p-z)) + *(y+size-(p-z)-1);
+	}
+}
