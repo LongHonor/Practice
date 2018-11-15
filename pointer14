@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+void ABC(int *p, int k);
+
+int main(){
+	int ar[10] = {0};
+	int *p = NULL;
+	int i = 0;
+	
+	for(p = ar;p<ar+10;p++){
+		scanf("%d",p);
+	}
+	p = ar+10;
+	for(i=10;i>=2;i--){
+		ABC(p-i,i);
+	}
+	
+	for(p=ar; p<ar+10;p++){
+		printf(" %d",*p);
+	}
+	printf("\n");
+	return 0;
+}
+
+void ABC(int *p, int k){
+	int *q = NULL;
+	int tmp = 0;
+	
+	for(q = p;q<p+k;q++){
+		if(*q > *p){
+			tmp = *p;
+			*p = *q;
+			*q = tmp;
+		}
+	}
+}
