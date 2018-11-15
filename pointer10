@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+void strcopy(char a[], char b[]);
+
+int main(){
+	char a[6]="",b[6]= "";
+	int i = 0;
+	char *p = a;
+	
+	while(p<a+6){
+		scanf("%c",p);
+		p++;
+	}
+	
+	strcopy(a,b);
+	
+	p = b;
+	
+	while(p<b+6){
+		printf("%c",*p);
+		p++;
+	}
+	
+	printf("\n");
+	
+	return 0;
+}
+
+void strcopy(char a[],char b[]){
+	int i = sizeof(a);
+	char *p = NULL,*q = NULL;
+	
+	q = b;
+	
+	for(p = a;p<a+i;p++){
+		*q = *p;
+		q++;
+	}
+	
+}
