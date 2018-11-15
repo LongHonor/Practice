@@ -1,0 +1,20 @@
+#include<stdio.h>
+
+int main(){
+	int ar[50],n;
+	int *p, *pn = &n;
+	int cnt = 0;
+	scanf("%d",pn);
+
+
+	for(p = ar;p<ar+n;p++){
+		scanf("%d",p);
+		if(*p!= 0)
+			cnt++;
+		else if(*p == 0){
+			break;
+		}
+	}
+	printf("%d\n",cnt);
+	return 0;
+}
