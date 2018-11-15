@@ -1,0 +1,34 @@
+#include <stdio.h>
+
+int add_to_k(int *p, int *q);
+
+int main(){
+	int d[100] = {0},n = 0;
+	int *p = NULL;
+	int res = 0, i = 0;
+	
+	scanf("%d",&n);
+	
+	for(p = d; p<d+n;p++){
+		scanf("%d",p);
+	}
+	
+	p = d;
+	
+	for(i = 0; i<n; i++){
+		res += add_to_k(p,(p+i));
+	}
+	
+	printf("%d\n",res);
+	
+	return 0;
+}
+
+int add_to_k(int *p, int *q){
+	int res = 0;
+	for(;p<=q;p++){
+		res += *p;
+	}
+	
+	return res;
+}
