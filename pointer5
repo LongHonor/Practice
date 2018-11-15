@@ -1,0 +1,30 @@
+#include<stdio.h>
+
+
+int main(){
+	char ch[10];
+	char *p = NULL, *q = NULL;
+	int cnt = 0,maxcnt = 0;
+	char ans;
+
+	for(p = ch; p<ch+10;p++){
+		scanf("%c",p);
+	}
+
+	for(p = ch; p<ch+10;p++){
+		cnt = 0;
+		for(q = ch; q<ch+10;q++){
+			if(*q == *p){
+				cnt++;
+			}
+		}
+		if (cnt > maxcnt){
+			maxcnt = cnt;
+			ans = *p;
+		}
+	}
+
+	printf("%c %d\n",ans,maxcnt);
+
+	return 0;
+}
