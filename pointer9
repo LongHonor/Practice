@@ -1,0 +1,33 @@
+#include<stdio.h>
+
+void gcdlcm(int x,int y,int *p, int *q);
+int main(){
+	
+	int a, b;
+	int *p=&a, *q=&b;
+
+	scanf("%d%d",&a,&b);
+
+	gcdlcm(a,b,p,q);
+
+	printf("%d %d\n",*p,*q);
+
+	return 0;
+}
+
+void gcdlcm(int x, int y, int *p, int *q){
+	int r, a, b;
+
+	a = x;
+	b = y;
+
+	while(y!=0){
+		r = x%y;
+		x = y;
+		y = r;
+	}
+	*p = x;
+
+	*q = a*b/x;
+
+}
