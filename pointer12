@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int arrsum(int *p,int *q);
+
+int main(){
+	int n = 0,s = 0, e = 0;
+	int ar[100] = {0};
+	int *p = NULL;
+	int res = 0;
+	
+	scanf("%d%d%d",&n,&s,&e);
+	
+	for(p = ar; p<ar+n; p++){
+		scanf("%d",p);
+	}
+	
+	p = ar;
+	
+	res = arrsum((p+s),(p+e));
+	
+	printf("%d\n",res);
+	
+	return 0;
+}
+
+int arrsum(int *p, int *q){
+	int res = 0;
+	for(;p<=q;p++){
+		res += *p;
+	}
+	
+	return res;
+}
