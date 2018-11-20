@@ -1,0 +1,33 @@
+#include<stdio.h>
+
+int main(){
+	char ch[1000]={'\0'};											//크기가 1000인 문자형 배열 ch를 선언 
+	int i=0,cnt=0;													//문자수를 체크할 변수 i와 중간 단어 수를 체크할 변수 cnt선언 
+	char *pch = NULL,*pch1 = NULL;									//포인터 변수 pch와 pch1선언 
+	
+	while(1){														//문장을 입력받는 반복문 
+		scanf("%c",ch+i);
+		if(*(ch+i)=='.'||*(ch+i)=='?'||*(ch+i)=='!') break;			//마침표 물음표 느낌표가 오면 탈출 
+		i++;
+	}
+	
+	for(pch = ch+i;pch>=ch;pch--){									//배열을 거꾸로 훑어봄 
+		if(*pch==' '){												//공백을 만난다면 공백 전까지의 단어들을 출력하고 공백문자 출력 
+			for(pch1 = pch+1;pch1<pch+cnt;pch1++){
+				printf("%c",*pch1);
+			}
+			printf(" ");
+			cnt = 0;												//문자수 0으로  초기화 
+		}
+		else if(pch==ch){											//문장의 첫단어일경우는 공백이 없기에  특수화 
+			for(pch1 = pch;pch1<pch+cnt;pch1++){
+				printf("%c",*pch1);
+			}
+			cnt = 0;
+		}
+		cnt++;														//공백이 아니거나 첫문자가 아닐때는 문자수를 더함 
+	}
+	printf("%c\n",*(ch+i));											//마침표 물음표 느낌표 중 하나를 출력 
+	
+	return 0;
+} 
