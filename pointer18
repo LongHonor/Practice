@@ -1,0 +1,70 @@
+#include<stdio.h>
+
+void sorting(int a[],int b[],int n,int m);			//sorting 함수원형선언 
+
+int main(){
+	int a[10],b[10];								//배열 2개 선언 
+	int n=0,m=0;									//갯수를 셀 n과 m선언 
+	int *p=NULL;									//포인터 변수 선언 
+	
+	while(1){										//배열주소를 훑어 a배열 입력 
+		scanf("%d",a+n);
+		if(*(a+n)==0) break;
+		n++;
+	}
+	
+	while(1){										//배열주소를 훑어 b배열 입력
+		scanf("%d",(b+m));
+		if(*(b+m)==0) break;
+		m++;
+	}
+	
+	sorting(a,b,n,m);								//sorting 함수 호출 
+	
+	for(p=a;p<a+n;p++){								//정렬된 a배열 출력 
+		printf("%d ",*p);
+	}
+	printf("\n");
+	
+	for(p=b;p<b+m;p++){								//정렬된 b배열 출력 
+		printf("%d ",*p);
+	}
+	printf("\n");
+	return 0;
+}
+
+void sorting(int a[],int b[],int n,int m){
+	int *p = NULL,*q=NULL;
+	int tmp = 0;
+	
+	for(p=a;p<a+n;p++){								//a배열과 b배열의 원소들을 교환 
+		for(q=b;q<b+m;q++){
+			if(*p<*q){								//b배열의 원소가 a배열의 원소보다 클 경우 교환 
+				tmp= *p;
+				*p = *q;
+				*q = tmp;
+			}
+		}
+	}
+	
+	for(p=a;p<a+n;p++){								//내림차순으로 정렬 
+		for(q=p+1;q<a+n;q++){
+			if(*p<*q){								//앞원소가 뒤원소보다 작다면 교환 
+				tmp = *p;
+				*p = *q;
+				*q = tmp;
+			}
+		}
+	}
+	
+	for(p=b;p<b+m;p++){								//오름차순으로 정렬 
+		for(q=p+1;q<b+m;q++){
+			if(*p>*q){								//앞원소가 뒤원소보다 크다면 교환 
+				tmp = *p;
+				*p = *q;
+				*q = tmp;
+			}
+		}
+	}
+	
+}
