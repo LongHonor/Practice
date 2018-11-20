@@ -1,0 +1,31 @@
+#include<stdio.h>
+
+void print(char ch1[], int cnt);				//print함수원형 선언 
+
+int main(){
+	char ch[100];					//문자형 배열 ch 선언 
+	char *c = ch;					//포인터변수 c 선언 
+	int i=0;
+	
+	while(1){						//문자를 입력받는 반복문  
+		scanf("%c",c+i);
+		if(*(c+i)=='*') break;		//*문자가 입력되면 반복문 탈출 
+		i++;
+	}
+	
+	print(ch,i);					//print함수 사용 
+	
+	return 0;
+}
+
+void print(char ch1[],int cnt){
+	char *c1 = NULL;				//포인터 변수 선언과 동시에 초기화 
+	
+	for(c1 = ch1+cnt-1;c1>=ch1;c1--){	//주소를 통해 배열 훑어보기 
+		if(*c1=='a'||*c1=='e'||*c1=='i'||*c1=='o'||*c1=='u')	//문자가 모음이라면 2번 출력 
+			printf("%c%c",*c1,*c1);
+		else						//자음이라면 한번 출력 
+			printf("%c",*c1);
+	}
+	printf("*\n");
+} 
