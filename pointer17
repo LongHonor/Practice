@@ -1,0 +1,63 @@
+#include<stdio.h>
+
+void input(char *p,int N);		//input 함수 원형 선언 
+void upper(char *p,int N);		//upper 함수 원형 선언 
+void lower(char *p,int N);		//lower 함수 원형 선언 
+int DOUBLE(char *p,int N);		//DOUBLE 함수 원형 선언 
+
+int main(){
+	int N=0,num=0;				//문자수를 저장할 변수  N과 2배한 수를 저장할 변수 num 선언과 초기화 
+	char ch[20];				//배열 선언 
+	
+	scanf("%d",&N);				//N에 문자수 저장 
+		
+	input(ch,N);				//input 함수 호출 
+	
+	upper(ch,N);				//upper함수 호출 
+	lower(ch,N);				//lower함수 호출 
+	
+	num = DOUBLE(ch,N);			//DOUBLE함수 호출과 num에 저장 
+	
+	printf("%d\n",num);
+	return 0;
+}
+
+void input(char *p,int N){
+	char *ch = NULL;				//주소를 훑으면서 배열에 문자 저장 
+	for(ch = p;ch<=p+N;ch++){
+		scanf("%c",ch);
+	}
+}
+
+void upper(char *p,int N){
+	char *ch=NULL;
+	for(ch=p;ch<=p+N;ch++){			//주소를 훑으며 대문자 판별 
+		if(*ch>='A'&&*ch<='Z'){
+			printf("%c",*ch);		//대문자이면 출력 
+		}
+	}
+	printf("\n");
+}
+
+void lower(char *p,int N){
+	char *ch=NULL;
+	for(ch=p;ch<=p+N;ch++){			//주소를 훑으며 소문자 판별 
+		if(*ch>='a'&&*ch<='z'){
+			printf("%c",*ch);		//소문자이면 출력 
+		}
+	}
+	printf("\n");
+}
+
+int DOUBLE(char *p,int N){			
+	char *ch=NULL;
+	int tmp=0;
+	for(ch=p;ch<=p+N;ch++){			//주소를 훑으며 숫자 판별 
+		if(*ch>='0'&&*ch<='9'){
+			tmp +=(*ch-48);			//숫자이면 연결된수를 만듦 
+			tmp*=10;
+		}
+
+	}
+	return tmp/5;					//최종결과가 출력결과 보다 5배 많으니 최종결과를 5로 나누어 리턴 
+}
