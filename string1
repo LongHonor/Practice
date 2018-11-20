@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main(){
+	char str[20] = "";
+	char *p = NULL;
+	
+	scanf("%s",str);
+	
+	for(p = str; p<str+20;p++){
+		if(*p>='a'&&*p<='z') printf("%c",*p);
+	}
+	printf("\n");
+	
+	return 0;
+} 
