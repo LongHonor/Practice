@@ -1,0 +1,40 @@
+#include <stdio.h>
+
+typedef struct student{															//student 구조체 정의 
+	int id;
+	double weight;
+	double height;
+}st; 																			//typedef 로 st로 바꿔줌 
+
+int main(){
+	st list[10] = {0,0.0,0.0};													//st 구조체 배열 list 선언 
+	int n = 0,i=0;
+	double avg_h = 0.0,avg_w = 0.0;												//평균신장과 평균몸무게 변수 선언 
+	
+	scanf("%d",&n);																//학생수를 입력받음 
+	
+	for(i=0;i<n;i++){
+		scanf("%d%lf%lf",&list[i].id,&list[i].height,&list[i].weight);			//학생수만큼 id,신장,몸무게를 입력받음 
+	}
+	for(i=0;i<n;i++){
+		avg_h += list[i].height;												//평균신장과 평균 몸무게를 계산함 
+		avg_w += list[i].weight;
+	}
+	avg_h/=n;
+	avg_w/=n;
+	
+	printf("%.1lf %.1lf\n",avg_h,avg_w);										//평균신장과 평균 몸무게를 출력
+	 
+	for(i=0;i<n;i++){
+		if(list[i].height>=avg_h&&list[i].weight>=avg_w){						//신장과 몸무게 모두 평균보다 높다면 super출력 
+			printf("%d super\n",list[i].id);
+		}
+		else if(list[i].height>=avg_h||list[i].weight>=avg_w){					//신장과 몸무게 둘 중 하나가 평균보다 높다면 average 출력 
+			printf("%d average\n",list[i].id);
+		}
+		else{																	//신장과 몸무게 모두 평균보다 낮은 경우 below출력 
+			printf("%d below\n",list[i].id);
+		}
+	}
+	return 0;
+}
