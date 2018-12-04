@@ -1,0 +1,110 @@
+#include<stdio.h>
+#include <string.h>
+
+typedef struct identity {							//identity 구조체 선언
+	char name[31];
+	char stu_no[8];
+	int nos;
+	char sub_name[10][31];
+	double score[10];
+}ID;
+
+void input(ID *ar);									//input 함수원형 선언
+void sort(ID ar[], int last);						//sort 함수 원형 선언
+void del(ID ar[], char str[31], int last);			//del함수 원형 선언
+void print(ID ar[], int last);						//print함수 원형 선언
+
+int main() {
+	ID ar[100] = { { "","",0,{ "" },{ 0.0 } } };	//ar배열 선언과 초기화
+	char ch = '\0', name[31] = "";
+	int i = 0;										//배열이 채워진 갯수 카운트할 변수 선언
+
+	while (1) {										//무한 루프
+		scanf("%c", &ch);							//명령 구분할 ch입력
+		if (ch == 'I') {							//I라면 input함수 호출
+			input(&ar[i]);
+			i++;
+		}
+		else if (ch == 'S') {						//S라면 sort함수 호출
+			sort(ar, i);
+		}
+		else if (ch == 'D') {						//D라면 del함수 호출
+			if (i != 0) {
+				scanf("%s", name);
+				del(ar, name, i);
+				i--;								//삭제 기능이기 때문에 카운트 1감소
+			}
+		}
+		else if (ch == 'P') {						//P라면 print함수 호출
+			print(ar, i);
+		}
+		else if (ch == 'Q') {						//Q라면 무한 반복 탈출
+			break;
+		}
+	}
+	return 0;
+}
+
+void input(ID *ar) {								//학생의 이름 학번 과목개수 과목,과목의 점수를 입력 받는다
+	int i = 0;
+	scanf("%s %s %d", &ar->name, &ar->stu_no, &ar->nos);
+	for (i = 0; i<ar->nos; i++) {					//과목개수까지 과목명과 과목의 점수를 입력 받음
+		scanf(" %s %lf", &ar->sub_name[i], &ar->score[i]);
+	}
+}
+
+void sort(ID ar[], int last) {
+	ID ar1[100] = { { "","",0,{ "" },{ 0.0 } } };	//print함수와 sort함수는 차이점이 입력된 순서를 출력하는것과 정렬된 순서로 출력하는것 그래서 원 배열을 복사할 배열을 선언
+	ID tmp = { "","",0,{ "" },{ 0.0 } };			
+	double avg = 0.0;					
+	int i = 0, j = 0;
+
+	for (i = 0; i<last; i++) {						//배열 복사
+		ar1[i] = ar[i];
+	}
+
+	for (i = 0; i<last - 1; i++) {					//이름을 아스키코드순으로 정렬
+		for (j = 0; j<last - 1; j++) {
+			if (strcmp(ar1[j].name, ar1[j + 1].name)>0) {		//버블정렬로 오름차순으로 정렬함
+				tmp = ar1[j];
+				ar1[j] = ar1[j + 1];
+				ar1[j + 1] = tmp;
+			}
+		}
+	}
+
+	for (i = 0; i< last; i++) {
+		avg = 0.0;
+		for (j = 0; j < ar1[i].nos; j++) {				//학점 평균을 구한다.
+			avg += ar1[i].score[j];
+		}
+		avg /= ar1[i].nos*1.0;
+		printf("%s %s %d %.2lf\n", ar1[i].name, ar1[i].stu_no, ar1[i].nos, avg);		//출력을 담당
+	}
+}
+
+void del(ID ar[], char str[31], int last) {
+	int i = 0, j = 0, n = 0;
+
+	for (i = 0; i<last; i++) {
+		n = strcmp(str, ar[i].name);			
+		if (n == 0) {							//입력받은 이름과 배열에 있는 이름이 같다면 뒤의 자료를 앞에 덮어씌운다.
+			for (j = i; j< last; j++) {
+				ar[j] = ar[j + 1];
+			}
+		}
+	}
+}
+
+void print(ID ar[], int last) {
+	int i = 0, j = 0;
+	double avg = 0.0;
+	for (i = 0; i<last; i++) {
+		avg = 0.0;
+		for (j = 0; j<ar[i].nos; j++) {				//학점의 평균을 구한다.
+			avg += ar[i].score[j];
+		}
+		avg /= ar[i].nos*1.0;
+		printf("%s %s %d %.2lf\n", ar[i].name, ar[i].stu_no, ar[i].nos, avg);		//이름 학번 과목갯수 학점평균을 출력한다.
+	}
+}
