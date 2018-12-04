@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+typedef struct student{
+	char name[10];
+	int score;
+}s; 
+
+int main(){
+	s ar[5] = {"",0};
+	int i = 0;
+	double avg = 0.0;
+	
+	for(i=0;i<5;i++){
+		scanf("%s%d",&ar[i].name,&ar[i].score);
+		avg+= ar[i].score;
+	}
+	avg/=5;
+	for(i=0;i<5;i++){
+		if(ar[i].score<avg) printf("%s\n",ar[i].name);
+	}
+	return 0;
+}
