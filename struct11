@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+typedef struct student{
+	char name[10];
+	int score;
+}s;
+
+s *select_min(s *p);
+
+int main(){
+	s ar[5] = {"",0},*p = NULL;
+	int i = 0;
+	
+	for(i=0;i<5;i++){
+		scanf("%s%d",&ar[i].name,&ar[i].score);
+	}
+	
+	p = select_min(ar);
+	
+	printf("%s %d\n",p->name,p->score);
+	
+	return 0;
+}
+
+s *select_min(s *p){
+	s *q = NULL;
+	s *o = NULL;
+	int low = p->score;
+	
+	o = p;
+	
+	for(q=p;q<p+5;q++){
+		if(q->score<low){
+			low = q->score;
+			o = q;
+		}
+	}
+	return o;
+}
