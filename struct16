@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+typedef struct parking{																						//parking 구조체 선언 
+	int carid,stuid;																						// 차번과 학번이 포함 
+	int e_year,e_month,e_date,e_hour,e_minute;																//들어왔을때의 시각 
+	int o_year,o_month,o_date,o_hour,o_minute;																//나갔을때의 시각 
+}park;																										//typedef로 park로 바꿔줌 
+
+int main(){
+	int n = 0,m = 0;
+	park ar[100] ={0,0,0,0,0,0,0,0,0,0,0,0};																//park 구조체 배열 선언 
+	int i = 0,j = 0,l=0;
+	int n_user[100] = {0},tmp=0;																			//부정사용자 배열 선언 
+	
+	scanf("%d",&n);																							//주차DB 데이터 갯수를 받아옴 
+	for(i=0;i<n;i++){																						//구조체 배열에 입력 
+		scanf("%d%d",&ar[i].carid,&ar[i].stuid);
+		scanf("%d-%d-%d%d:%d",&ar[i].e_year,&ar[i].e_month,&ar[i].e_date,&ar[i].e_hour,&ar[i].e_minute);
+		scanf("%d-%d-%d%d:%d",&ar[i].o_year,&ar[i].o_month,&ar[i].o_date,&ar[i].o_hour,&ar[i].o_minute);
+	}
+	
+	for(i=0;i<n;i++){																						
+		for(j=0;j<n;j++){
+			if(i==j) continue;																				//기준데이터 순서와 비교데이터 순서가 같다면 검사 안함 
+			else{
+				if(ar[i].stuid==ar[j].stuid){																//학번이 같은경우 
+					if(ar[i].carid==ar[j].carid) continue;													//차번이 같다면 검사 안함 
+					else{																					//차번이 다르다면 부정사용자 배열에 추가 
+						n_user[l] = ar[i].stuid;
+						l++;
+					}
+				}
+			}
+		}
+	}
+	
+	for(i = 0;i<l-1;i++){																					//부정사용자 배열을 오름차순으로 정렬 
+		for(j=0;j<l-1;j++){
+			if(n_user[j]>n_user[j+1]){
+				tmp = n_user[j];
+				n_user[j] = n_user[j+1];
+				n_user[j+1] = tmp;
+			}
+		}
+	}
+
+	for(i=0;i<l;i++){																						//기준 부정사용자가 뒷 부정사용자와 학번이 다를경우만 출력 
+		if(n_user[i]!=n_user[i+1]) printf("%d\n",n_user[i]);
+	}
+	
+	return 0;
+}
