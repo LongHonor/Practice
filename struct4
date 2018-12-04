@@ -1,0 +1,35 @@
+#include <stdio.h>
+
+typedef struct student{
+	char name[20];
+	int a;
+	int b;
+	int c;
+}score; 
+
+int main(){
+	score ar[20] = {"",0,0,0};
+	int n = 0,i=0;
+	double sc[20]={0.0};
+	
+	scanf("%d",&n);
+	
+	for(i=0;i<n;i++){
+		scanf("%s%d%d%d",&ar[i].name,&ar[i].a,&ar[i].b,&ar[i].c);
+	}
+	
+	for(i=0;i<n;i++){
+		sc[i] = (ar[i].a + ar[i].b + ar[i].c)/3.0;
+	}
+	
+	for(i=0;i<n;i++){
+		printf("%s",ar[i].name);
+		printf(" %.1lf",sc[i]);
+		if(sc[i]>=90) printf(" A\n");
+		else if(sc[i]>=80) printf(" B\n");
+		else if(sc[i]>=70) printf(" C\n");
+		else printf(" F\n");
+	}
+	
+	return 0;
+}
