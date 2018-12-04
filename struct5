@@ -1,0 +1,41 @@
+#include <stdio.h>
+
+typedef struct student{
+	char name[10];
+	int kr;
+	int en;
+	int ma;
+	double avg;
+	char sc;
+}score; 
+
+int main(){
+	int n = 0,i=0;
+	score sc[50] = {"",0,0,0,0.0,'\0'};
+	score *p = NULL;
+	
+	scanf("%d",&n);
+	
+	for(p = sc;p<sc+n;p++){
+		scanf("%s%d%d%d",&p->name,&p->kr,&p->en,&p->ma);
+	}
+	
+	for(p= sc; p<sc+n;p++){
+		p->avg = (p->kr+p->en+p->ma)/3.0;
+	}
+	
+	for(p = sc; p<sc+n;p++){
+		if(p->avg>=90) p->sc = 'A';
+		else if(p->avg>=80) p->sc = 'B';
+		else if(p->avg>=70) p->sc = 'C';
+		else p->sc = 'D';
+	}
+	
+	for(p = sc; p<sc+n;p++){
+		printf("%s",p->name);
+		printf(" %.1lf",p->avg);
+		printf(" %c\n",p->sc);
+	}
+	
+	return 0;
+}
