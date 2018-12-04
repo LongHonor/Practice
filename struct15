@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct student{																						//구조체 student 정의  
+	char name[10];
+	char name_f[3][10];
+}person;																									//typedef 로 person으로 바궈줌
+
+int ABC(person stu[],char *perA, char *perB);																//ABC 함수 원형 선언 
+
+int main(){ 
+	person ar[3] = {"",{""}};																				//person 구조체 배열 선언 
+	int i = 0,j=0;
+	int n = 0;
+	
+	for(i = 0;i<3;i++){
+		scanf("%s -> %s%s%s",&ar[i].name,&ar[i].name_f[0],&ar[i].name_f[1],&ar[i].name_f[2]);				//3명의 학생이름과 각각 좋아하는 학생의 이름 3개 를 입력 받음 
+	}
+	
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+			n = ABC(ar,ar[i].name,ar[i].name_f[j]);															//ABC함수를 호출해 n에 저장
+			if(n==1) printf("%s %s\n",ar[i].name,ar[i].name_f[j]);											//n이 1이라면 이름들을 출력한다 
+		}
+	}
+	
+	return 0;
+}
+
+int ABC(person stu[],char *perA,char *perB){
+	int i = 0,j=0;
+	int n = 0,m = 0;
+
+	for(i=0;i<3;i++){
+		n = strcmp(stu[i].name,perB);																		//perA의 목록에 perB가 있는지 확인 
+		if (n==0){																							//있으면 n = 0 
+			for(j=0;j<3;j++){
+				m = strcmp(perA,stu[i].name_f[j]);															//perB의 목록에 perA가 있는지 확인 
+				if(m == 0){																					//함수에서 1을 반환 
+					return 1;
+				}
+			}
+		}
+	}
+	return 0;																								//perB의 목록에 perA가 없다면 함수에서 0을 반환 
+} 
