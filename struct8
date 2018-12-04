@@ -1,0 +1,26 @@
+#include <stdio.h>
+
+typedef struct number{
+	double real;
+	double imag;
+}n; 
+
+n add(n n1,n n2);
+
+int main(){
+	n n1 = {0.0,0.0};
+	n n2 = n1,n3 = n1;
+	
+	scanf("%lf%lf%lf%lf",&n1.real,&n1.imag,&n2.real,&n2.imag);
+	n3 = add(n1,n2);
+	
+	printf("%.1lf + %.1lfi",n3.real,n3.imag);
+	return 0;
+}
+
+n add(n n1,n n2){
+	n res = {0.0,0.0};
+	res.real = n1.real + n2.real;
+	res.imag = n1.imag + n2.imag;
+	return res;
+}
