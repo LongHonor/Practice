@@ -1,0 +1,124 @@
+#include <stdio.h>
+
+typedef struct parking{																						//parking 구조체 선언 
+	int carid,stuid;																						// 차번과 학번이 포함 
+	int e_year,e_month,e_date,e_hour,e_minute;																//들어왔을때의 시각 
+	int o_year,o_month,o_date,o_hour,o_minute;																//나갔을때의 시각 
+}park;																										//typedef로 park로 바꿔줌 
+
+int timecheck(park ar);
+
+int main(){
+	int n = 0,m = 0;
+	park ar[100] ={0,0,0,0,0,0,0,0,0,0,0,0};																//park 구조체 배열 선언
+	park ptmp = ar[0];
+	int i = 0,j = 0,l=0,t = 0;
+	int n_user[100] = {0},tmp=0;																			//부정사용자 배열 선언
+	int n1 = 0,car_to_find[100]={0},min = 0;
+	int pee[100] = {0};
+	
+	scanf("%d",&n);																							//주차DB 데이터 갯수를 받아옴 
+	for(i=0;i<n;i++){																						//구조체 배열에 입력 
+		scanf("%d%d",&ar[i].carid,&ar[i].stuid);
+		scanf("%d-%d-%d%d:%d",&ar[i].e_year,&ar[i].e_month,&ar[i].e_date,&ar[i].e_hour,&ar[i].e_minute);
+		scanf("%d-%d-%d%d:%d",&ar[i].o_year,&ar[i].o_month,&ar[i].o_date,&ar[i].o_hour,&ar[i].o_minute);
+	}
+	
+	for(i=0;i<n;i++){																						//부정사용자 판별 반복문 
+		for(j=0;j<n;j++){
+			if(i==j) continue;																				//기준데이터 순서와 비교데이터 순서가 같다면 검사 안함 
+			else{
+				if(ar[i].stuid==ar[j].stuid){																//학번이 같은경우 
+					if(ar[i].carid==ar[j].carid) continue;													//차번이 같다면 검사 안함 
+					else{																					//차번이 다르다면 부정사용자 배열에 추가 
+						n_user[l] = ar[i].stuid;
+						l++;
+					}
+				}
+			}
+		}
+	}
+	
+	for(i = 0;i<l-1;i++){																					//부정사용자 배열을 오름차순으로 정렬 
+		for(j=0;j<l-1;j++){
+			if(n_user[j]>n_user[j+1]){
+				tmp = n_user[j];
+				n_user[j] = n_user[j+1];
+				n_user[j+1] = tmp;
+			}
+		}
+	}
+
+	scanf("%d",&n1);																						//정산할 주차대수 입력 
+	
+	for(i=0;i<n1;i++){																						//요금 계산 반복문 
+		scanf("%d",&car_to_find[i]);																		
+		for(j=0;j<n;j++){																					//입력된 차번과 동일한 차번일경우 구조체를 ptmp에 대입 후 반복문 탈출 
+			if(car_to_find[i]==ar[j].carid){
+				ptmp = ar[j];
+				break;
+			}
+		}
+		min = timecheck(ptmp);																				//시간계산 위해 timecheck함수 호출 
+		if(min<=60){																						//시간이 60분 이하라면 기본주차요금 징수 
+			pee[i] = 3000;
+		}
+		else{																								//시간이 60분 이상이라면 요금계산 
+			min-=60;
+			pee[i]+=3000;
+			min/=10;
+			min+=1;
+			pee[i]+=min*1000;
+			if(pee[i]>30000){																				//하루 주차요금 상한 30000원을 넘는다면 30000원만 징수 
+				pee[i] = 30000;
+			}
+		}
+		for(j=0;j<n;j++){																					//부정사용자가 정산을 한다면 
+			if(car_to_find[i]==ar[j].carid){
+				for(t=0;t<n;t++){
+					if(ar[j].stuid == n_user[t]){
+						pee[i] = 100000;																	//요금 100000원 징수후 탈출 
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	for(i=0;i<n1;i++){																						//정산할 요금 출력 
+		printf("%d\n",pee[i]);
+	}
+	
+	
+	return 0;
+}
+
+int timecheck(park ar){
+	int min = 0,hour = 0;
+	int res = 0;
+	int mflag = 0;
+	if(ar.o_minute - ar.e_minute > 0){																		//출차 시각의 분이 입차 시각의 분보다 크다면 
+		min = ar.o_minute - ar.e_minute;																	//그대로 뺄셈 연산만 
+	}
+	else if(ar.o_minute - ar.e_minute < 0){																	//출차 시각읩 분이 입차 시각의 분보다 작다면 
+		min = 60 - ar.e_minute + ar.o_minute;																//시간을 분으로 바꿔 뺄셈 
+		mflag = 1;																							//mflag 를 1로 바꾸는것으로 1시간을 60분으로 바꾼것을 표시 
+	}
+	else{																									//같다면 0분 
+		min = 0;
+	}
+	if(mflag == 1){																							//mflag가 1이라면 
+		if(ar.o_hour - ar.e_hour > 0){																		//시간계산 후 1시간 추가로 빼기 
+			hour = ar.o_hour - ar.e_hour - 1;
+		}
+		else hour = 0;																						 
+	}
+	else{																									//mflag가 0이라면 
+		if(ar.o_hour - ar.e_hour > 0){																		//그냥 출차시각의 시에서 입차시각의 시를 빼기 
+			hour = ar.o_hour - ar.e_hour;
+		}
+		else hour = 0;
+	}
+	res = (hour*60)+min;																					//계산하기 편하게 분으로 바꿔 리턴 
+	return res;
+}
