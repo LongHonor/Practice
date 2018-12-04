@@ -1,0 +1,27 @@
+#include <stdio.h>
+
+typedef struct result{
+	int high;
+	int low;
+	char pf;
+	int dif_p;
+	int dif_h;	
+}r;
+
+void passorfail(r *p);
+
+int main(){
+	r res = {0,0,'\0',0,0};
+	scanf("%d%d%d",&res.high,&res.low,&res.dif_p);
+	res.dif_h = res.high - res.low;
+	passorfail(&res);
+	
+	printf("%d %c\n",res.dif_h,res.pf);
+	
+	return 0;
+}
+
+void passorfail(r *p){
+	if(p->dif_h<=p->dif_p) p->pf = 'P';
+	else p->pf = 'F';
+}
