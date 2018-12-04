@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+typedef struct vector{
+	int x;
+	int y;
+	int z;
+}vec; 
+
+int main(){
+	vec v1= {0,0,0};
+	vec v2 = v1,v3 = v1;
+	
+	scanf("%d%d%d",&v1.x,&v1.y,&v1.z);
+	scanf("%d%d%d",&v2.x,&v2.y,&v2.z);
+	
+	v3.x = v1.x * v2.x;
+	v3.y = v1.y * v2.y;
+	v3.z = v1.z * v2.z;
+	
+	printf("%d %d %d\n",v3.x,v3.y,v3.z);
+	printf("%d\n",v3.x+v3.y+v3.z);
+	
+	return 0;
+}
