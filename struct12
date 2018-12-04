@@ -1,0 +1,63 @@
+#include <stdio.h>
+
+typedef struct score{
+	char str[10];
+	int t1,t2,t3;
+	double avg;
+}sc;
+
+void read_data(sc ar[]);
+void cal_avg(sc ar[]);
+void sort(sc ar[]);
+void print_score(sc ar[]);
+
+int main(){
+	sc ar[10] = {{"",0,0,0,0.0}};
+	
+	read_data(ar);
+	cal_avg(ar);
+	sort(ar);
+	print_score(ar);
+	
+	return 0;
+}
+
+void read_data(sc ar[]){
+	int i = 0;
+	for(i = 0; i<10;i++){
+		scanf("%s%d%d%d",&ar[i].str,&ar[i].t1,&ar[i].t2,&ar[i].t3);
+	}
+}
+
+void cal_avg(sc ar[]){
+	int i = 0;
+	for(i=0;i<10;i++){
+		ar[i].avg = (ar[i].t1+ar[i].t2+ar[i].t3)/3.0;
+	}
+}
+
+void sort(sc ar[]){
+	int i = 0,j = 0;
+	sc tmp = {"",0,0,0,0.0};
+	
+	for(i=0;i<10;i++){
+		for(j=0;j<10;j++){
+			if(ar[j].avg<ar[j+1].avg){
+				tmp = ar[j];
+				ar[j] = ar[j+1];
+				ar[j+1] = tmp;
+			}
+		}
+	}
+}
+
+void print_score(sc ar[]){
+	int i = 0;
+	printf("%s %.2lf\n",ar[0].str,ar[0].avg);
+	printf("%s %.2lf\n",ar[9].str,ar[9].avg);
+	
+	for(i=7;i<10;i++){
+		printf("%s %.2lf\n",ar[i].str,ar[i].avg);
+	}
+	
+}
