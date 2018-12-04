@@ -1,0 +1,49 @@
+#include <stdio.h>
+
+typedef struct ymd{
+	int year;
+	int month;
+	int date;
+}t; 
+
+t *select_min(t *p,t *q);
+
+int main(){
+	t t1 = {0,0,0};
+	t t2 = t1,*p = NULL;
+	
+	scanf("%d/%d/%d",&t1.year,&t1.month,&t1.date);
+	scanf("%d/%d/%d",&t2.year,&t2.month,&t2.date);
+	
+	p = select_min(&t1,&t2);
+	
+	printf("%d/%d/%d\n",p->year,p->month,p->date);
+	return 0;
+}
+
+t *select_min(t *p,t *q){
+	if(p->year<q->year){
+		return p;
+	}
+	else if(p->year>q->year){
+		return q;
+	}
+	else{
+		if(p->month<q->month){
+			return p;
+		}
+		else if(p->month>q->month){
+			return q;
+		}
+		else{
+			if(p->date<q->date){
+				return p;
+			}
+			else if(p->date>q->date){
+				return q;
+			}
+			else return p;
+		}
+	}
+	
+}
